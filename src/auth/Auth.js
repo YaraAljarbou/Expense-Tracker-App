@@ -1,4 +1,5 @@
-import { AuthSession } from 'expo';
+// import { AuthSession } from 'expo';
+import * as AuthSession from 'expo-auth-session';
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';

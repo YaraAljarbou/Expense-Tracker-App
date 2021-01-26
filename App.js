@@ -19,40 +19,44 @@ export default function App() {
     setJwt(token);
     setLoading(false);
   }
-  
+
   const logout = () => {
     setIsLoggedIn(false);
     setLoading(false);
   }
 
-  useEffect( async () => {
-    AsyncStorage.getItem('@expense-tracker:auth0').then((session) => {//////////////////////////
-      if (session) {
-        const obj = JSON.parse(session);
-        if (obj.exp > Math.floor(new Date().getTime() / 1000))
-          login(obj.id, obj.name, obj.token);
+  useEffect(() => {
+    async function getSession() {
+      AsyncStorage.getItem('@expense-tracker:auth0').then((session) => {//////////////////////////
+        if (session) {
+          const obj = JSON.parse(session);
+          if (obj.exp > Math.floor(new Date().getTime() / 1000))
+            login(obj.id, obj.name, obj.token);
+          else
+            logout();
+        }
         else
           logout();
-      } 
-      else
-        logout();
-    })
+      })
+    }    // Execute the created function directly
+    getSession();
+
   }, []);
 
-  if (loading)
-    return <View><Text>Loading...</Text></View>
-
-  if (isLoggedIn)
-    return (
+  return (
+    <>
+      {loading && <View><Text>Loading...</Text></View>}
+      {isLoggedIn && 
       <Main
         userId={userId}
         username={username}
         token={jwt}
         logout={logout}
       />
-    )
-  else
-    return (<Auth login={login}/>)
+      }
+      { !loading && !isLoggedIn && <Auth login={login} />}
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
