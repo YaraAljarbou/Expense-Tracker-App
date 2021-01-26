@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
 import Auth from './src/auth/Auth';
 import Main from './src/app/Main';
 
@@ -23,6 +24,7 @@ export default function App() {
   const logout = () => {
     setIsLoggedIn(false);
     setLoading(false);
+    AsyncStorage.removeItem('@expense-tracker:auth0')
   }
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <PaperProvider>
       {loading && <View><Text>Loading...</Text></View>}
       {isLoggedIn && 
       <Main
@@ -55,7 +57,7 @@ export default function App() {
       />
       }
       { !loading && !isLoggedIn && <Auth login={login} />}
-    </>
+    </PaperProvider>
   )
 }
 

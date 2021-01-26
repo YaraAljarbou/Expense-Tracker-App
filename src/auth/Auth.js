@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import jwtDecoder from 'jwt-decode';
+import { Button, Title } from 'react-native-paper';
 const auth0ClientId = 'xYCVQxpXx4GMUSqcXfr15xnGnPoSv1yh';//////////////////////////////
 const auth0Domain = 'https://expense-tracker-app.us.auth0.com';////////////////////////////////
 
@@ -59,14 +60,18 @@ const Auth = ({ login }) => {
 
    return (
       <View style={styles.container}>
-         <View>
+         <Title>Expense Tracker</Title>
+         <Button mode="contained" onPress={loginWithAuth0}>
+            Login
+         </Button>
+         {/* <View>
             <TouchableOpacity
                style={styles.loginButton}
                onPress={loginWithAuth0}
             >
                <Text style={styles.buttonText}> Login </Text>
             </TouchableOpacity>
-         </View>
+         </View> */}
       </View>
    )
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, Text, View , Button} from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
+import { Button, Title } from 'react-native-paper';
 import createApolloClient from './apollo';
 import gql from 'graphql-tag';
 import { ApolloProvider } from 'react-apollo';
@@ -43,8 +44,10 @@ const Main = ({ userId, username, token, logout }) => {
             logout={logout}
          /> */}
          <View style={styles.container}>
-            <Text>{userId}, {username}</Text>
-            <Button onPress={logout} title="logout"/>
+            <Title>User Name: {username}</Title>
+            <Button mode="contained" onPress={logout}>
+            Logout
+            </Button>
          </View>
          </ApolloProvider>
          : <View><Text>Loading...</Text></View>
