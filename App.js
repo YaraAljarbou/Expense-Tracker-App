@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View } from 'react-native';
 import Auth from './src/auth/Auth';
 import Main from './src/app/Main';
@@ -11,7 +12,7 @@ export default function App() {
   const [jwt, setJwt] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  login = (userId, username, token) => {
+  const login = (userId, username, token) => {
     setIsLoggedIn(true);
     setUserId(userId);
     setUsername(username);
@@ -19,7 +20,7 @@ export default function App() {
     setLoading(false);
   }
   
-  logout = () => {
+  const logout = () => {
     setIsLoggedIn(false);
     setLoading(false);
   }
