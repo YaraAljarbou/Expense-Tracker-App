@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View} from 'react-native';
 import { Button, Title } from 'react-native-paper';
 import createApolloClient from './apollo';
 import gql from 'graphql-tag';
 import { ApolloProvider } from 'react-apollo';
-//import TodoList from './TodoList';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './components/HomeScreen';
+import SettingScreen from './components/SettingScreen';
 
 const Main = ({ userId, username, token, logout }) => {
    const [client, setClient] = useState(null);
@@ -35,20 +37,17 @@ const Main = ({ userId, username, token, logout }) => {
       // logout();
    }, []);
 
+   const Tab = createBottomTabNavigator();
+
    return (
       client ?
          <ApolloProvider client={client}>
-            {/* <TodoList
-            userId={userId}
-            username={username}
-            logout={logout}
-         /> */}
-         <View style={styles.container}>
-            <Title>User Name: {username}</Title>
-            <Button mode="contained" onPress={logout}>
-            Logout
-            </Button>
-         </View>
+            <NavigationContainer>
+               <Tab.Navigator>
+                  <Tab.Screen name="Home" component={HomeScreen} />
+                  <Tab.Screen name="Setting" component={SettingScreen} />
+               </Tab.Navigator>
+            </NavigationContainer>
          </ApolloProvider>
          : <View><Text>Loading...</Text></View>
    );
