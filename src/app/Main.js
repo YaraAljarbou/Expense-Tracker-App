@@ -8,8 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, Appbar, IconButton } from 'react-native-paper';
 import HomeScreen from './components/HomeScreen';
-import Transactions from './components/Transactions';
-import SettingScreen from './components/SettingScreen';
+import ExpenceForm from './components/ExpenceForm';
 
 const Main = ({ userId, username, token, logout }) => {
    const [client, setClient] = useState(null);
@@ -24,7 +23,7 @@ const Main = ({ userId, username, token, logout }) => {
          case 'home':
             return <HomeScreen jumpTo={jumpTo} userId={userId} username={username} logout={logout} setIndex={setIndex} />;
          case 'add':
-            return <SettingScreen jumpTo={jumpTo} />;
+            return <ExpenceForm jumpTo={jumpTo} />;
          // case 'recents':
          //    return <SettingScreen jumpTo={jumpTo} />;
       }
