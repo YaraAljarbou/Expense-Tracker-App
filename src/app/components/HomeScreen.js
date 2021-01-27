@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Appbar, FAB, Title, Divider, Card, Paragraph, Avatar, Badge  } from 'react-native-paper';
 // import Transactions from './Transactions'
 
-const HomeScreen = ({ userId, username, logout }) => {
+const HomeScreen = ({ userId, username, logout, setIndex }) => {
     const data = {
         transactions: [
             {
@@ -79,11 +79,11 @@ const HomeScreen = ({ userId, username, logout }) => {
                     {data.transactions.map( item => <TranItem item={item}/> )}
                 </ScrollView>
             </View>
-            <FAB
+            {/* <FAB
                 style={styles.fab}
                 icon="plus"
-                onPress={() => console.log('Pressed')}
-            />
+                onPress={() => setIndex(2)}
+            /> */}
         </View>
     )
 }

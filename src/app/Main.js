@@ -16,17 +16,17 @@ const Main = ({ userId, username, token, logout }) => {
    const [index, setIndex] = useState(0);
    const [routes] = useState([
       { key: 'home', title: 'Home', icon: 'home', userId },
-      { key: 'albums', title: 'Albums', icon: 'album' },
-      { key: 'recents', title: 'Recents', icon: 'history' },
+      { key: 'add', title: 'Add Expense', icon: 'plus-circle' },
+      // { key: 'recents', title: 'Recents', icon: 'history' },
    ]);
    const renderScene = ({ route, jumpTo }) => {
       switch (route.key) {
          case 'home':
-            return <HomeScreen jumpTo={jumpTo} userId={userId} username={username} logout={logout} color="red"/>;
-         case 'albums':
+            return <HomeScreen jumpTo={jumpTo} userId={userId} username={username} logout={logout} setIndex={setIndex} />;
+         case 'add':
             return <SettingScreen jumpTo={jumpTo} />;
-         case 'recents':
-            return <SettingScreen jumpTo={jumpTo} />;
+         // case 'recents':
+         //    return <SettingScreen jumpTo={jumpTo} />;
       }
    }
    // const HomeScreen = (props) => {
