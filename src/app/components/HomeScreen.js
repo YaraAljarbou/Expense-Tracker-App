@@ -1,54 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Appbar, FAB, Title, Divider, Card, Paragraph, Avatar, Badge  } from 'react-native-paper';
 // import Transactions from './Transactions'
 
-const HomeScreen = ({ userId, username, logout, setIndex }) => {
-    const data = {
-        transactions: [
-            {
-                id:1,
-                amount: "-10.00",
-                category: {
-                    name: "Food", 
-                    icon: "food"
-                },
-                description: "Rice",
-                type: "-"
-            },
-            {
-                id:2,
-                amount: "-20.00",
-                category: {
-                    name: "Food", 
-                    icon: "food"
-                },
-                description: "Cake",
-                type: "-"
-            },
-            {
-                id:3,
-                amount: "-5.00",
-                category: {
-                    name: "Food", 
-                    icon: "food"
-                },
-                description: "Chocolate",
-                type: "-"
-            },
-            {
-                id:4,
-                amount: "100.00",
-                category: {
-                    name: "Income",
-                    icon: "cash"
-                },
-                description: "Freelance",
-                type: "+"
-            },
-        ]
-    }
+const HomeScreen = ({logout, data }) => {
+    
+    // const data = {
+    //     transactions: [
+    //         {
+    //             id:1,
+    //             amount: "-10",
+    //             category: {
+    //                 name: "Food", 
+    //                 icon: "food"
+    //             },
+    //             description: "Rice",
+    //         },
+    //         {
+    //             id:2,
+    //             amount: "-20",
+    //             category: {
+    //                 name: "Food", 
+    //                 icon: "food"
+    //             },
+    //             description: "Cake",
+    //         },
+    //         {
+    //             id:3,
+    //             amount: "-5",
+    //             category: {
+    //                 name: "Food", 
+    //                 icon: "food"
+    //             },
+    //             description: "Chocolate",
+    //         },
+    //         {
+    //             id:4,
+    //             amount: "100",
+    //             category: {
+    //                 name: "Income",
+    //                 icon: "cash"
+    //             },
+    //             description: "Freelance",
+    //         },
+    //     ]
+    // }
 
     const TranItem = ({item}) => {
         return(        
@@ -57,13 +54,13 @@ const HomeScreen = ({ userId, username, logout, setIndex }) => {
                 title={item.description} 
                 subtitle={item.category.name} 
                 left={(props) => <Avatar.Icon {...props} icon={item.category.icon}/>}
-                right={() => <Paragraph style={{color: item.type == "+" ? "green" : "red", marginRight: 20}}>{item.amount}</Paragraph>}
+                right={() => <Paragraph style={{color: item.amount > 0 ? "green" : "red", marginRight: 20}}>{Number(item.amount).toFixed(2)}</Paragraph>}
                 />
         </Card>)
     }
 
     const getBalance = (data) => {
-        let balance = data.transactions.reduce((acc, item) => acc + Number(item.amount.replace(/[$,]/g,"")), 0)
+        let balance = data.reduce((acc, item) => acc + Number(item.amount), 0)
         return balance
     }
     return (
@@ -73,10 +70,10 @@ const HomeScreen = ({ userId, username, logout, setIndex }) => {
                 <Appbar.Action icon="logout" onPress={logout} />
             </Appbar.Header>
             <View style={{ margin: 10 }}>
-                <Title>Your Balance: ${getBalance(data)}</Title>
+                <Title>Your Balance: ${getBalance(data).toFixed(2)}</Title>
                 <Divider />
                 <ScrollView>
-                    {data.transactions.map( item => <TranItem item={item}/> )}
+                    {data.map( item => <TranItem item={item} key={item.id}/> )}
                 </ScrollView>
             </View>
             {/* <FAB

@@ -8,22 +8,59 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, Appbar, IconButton } from 'react-native-paper';
 import HomeScreen from './components/HomeScreen';
-import ExpenceForm from './components/ExpenceForm';
+import ExpenseForm from './components/ExpenseForm';
 
 const Main = ({ userId, username, token, logout }) => {
    const [client, setClient] = useState(null);
    const [index, setIndex] = useState(0);
+   const [data, setData] = useState([
+      {
+         id: 1,
+         amount: "-10",
+         category: {
+            name: "Food",
+            icon: "food"
+         },
+         description: "Rice",
+      },
+      {
+         id: 2,
+         amount: "-20",
+         category: {
+            name: "Food",
+            icon: "food"
+         },
+         description: "Cake",
+      },
+      {
+         id: 3,
+         amount: "-5",
+         category: {
+            name: "Food",
+            icon: "food"
+         },
+         description: "Chocolate",
+      },
+      {
+         id: 4,
+         amount: "100",
+         category: {
+            name: "Income",
+            icon: "cash"
+         },
+         description: "Freelance",
+      },
+   ])
    const [routes] = useState([
-      { key: 'home', title: 'Home', icon: 'home', userId },
+      { key: 'home', title: 'Home', icon: 'home' },
       { key: 'add', title: 'Add Expense', icon: 'plus-circle' },
-      // { key: 'recents', title: 'Recents', icon: 'history' },
    ]);
    const renderScene = ({ route, jumpTo }) => {
       switch (route.key) {
          case 'home':
-            return <HomeScreen jumpTo={jumpTo} userId={userId} username={username} logout={logout} setIndex={setIndex} />;
+            return <HomeScreen jumpTo={jumpTo} logout={logout} data={data} setData={setData}/>;
          case 'add':
-            return <ExpenceForm jumpTo={jumpTo} />;
+            return <ExpenseForm jumpTo={jumpTo} logout={logout} data={data} setData={setData} setIndex={setIndex}/>;
          // case 'recents':
          //    return <SettingScreen jumpTo={jumpTo} />;
       }
