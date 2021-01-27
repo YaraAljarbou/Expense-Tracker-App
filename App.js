@@ -50,7 +50,7 @@ export default function App() {
     roundness: 2,
     colors: {
       ...DefaultTheme.colors,
-      primary: '#3498db',
+      primary: '#76b947',
       accent: '#f1c40f',
     },
   };

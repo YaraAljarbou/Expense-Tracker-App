@@ -58,6 +58,7 @@ const Auth = ({ login }) => {
       ).then(() => login(decodedToken.sub, decodedToken.nickname, encodedToken));
    }
 
+   
    return (
       <View style={styles.container}>
          <Title>Expense Tracker</Title>
