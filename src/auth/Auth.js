@@ -67,6 +67,9 @@ const Auth = ({ login }) => {
             <Button style={{ width: 250, marginTop: 10}} mode="contained" onPress={loginWithAuth0}>
                Lets Get Started
             </Button>
+
+            <Text style={{color: "green", fontSize: 20, marginTop: 60}}>Developed By</Text>
+            <Text style={{color: "gray", fontSize: 15, marginTop: 10}}>Yara Aljarbou & Wijdan Kuddah</Text>
          </View>
       </>
    )
