@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Appbar, TextInput, Card, FAB } from 'react-native-paper';
+import { Appbar, TextInput, Card, FAB, Avatar } from 'react-native-paper';
 import DropDown from 'react-native-paper-dropdown';
 import CategoryData from './CategoryData';
 
-const ExpenseForm = ({ logout, data, setData, setIndex }) => {
+const Profile = ({ logout, username }) => {
     const [expense, setExpense] = useState({
         id: Math.random().toString(36).substr(2, 9),
         amount: "",
@@ -48,39 +48,8 @@ const ExpenseForm = ({ logout, data, setData, setIndex }) => {
             </Appbar.Header>
             <View style={styles.container}>
                 <Card style={{ marginTop: '30%', padding: 30 }}>
-                    <Card.Title title="New Expence" style={{ marginLeft: '25%' }} /> 
-                    <TextInput
-                        style={{ marginTop: 20, marginBottom: 20 }}
-                        label="Amount"
-                        value={expense.amount}
-                        onChangeText={value => setExpense({ ...expense, amount: value})}
-                    />
-                    <DropDown
-                        activeColor={"green"}
-                        label={'Category'}
-                        mode={'flat'}
-                        value={category}
-                        setValue={setCategory}
-                        list={categoryList}
-                        visible={showDropDown}
-                        showDropDown={() => setShowDropDown(true)}
-                        onDismiss={() => setShowDropDown(false)}
-                        inputProps={{
-                            right: <TextInput.Icon name={'menu-down'} />,
-                        }}
-                    />
-                    <TextInput
-                        style={{ marginTop: 20 }}
-                        label="Description"
-                        value={expense.description}
-                        onChangeText={value => setExpense({ ...expense, description: value })}
-                    />
-                    <FAB
-                        style={styles.fab}
-                        icon="plus"
-                        label="Add"
-                        onPress={handleChange}
-                    />
+                    <Card.Title title={username} style={{ marginLeft: '25%' }} /> 
+                    <Avatar.Icon style={{ marginLeft: '35%' }} size={100} icon="account-circle" />
                 </Card>
             </View>
         </View>
@@ -99,4 +68,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default ExpenseForm;
+export default Profile;

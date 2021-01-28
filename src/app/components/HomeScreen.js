@@ -1,89 +1,48 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Appbar, FAB, Title, Divider, Card, Paragraph, Avatar, Badge  } from 'react-native-paper';
-// import Transactions from './Transactions'
+import { Appbar, Divider, Avatar } from 'react-native-paper';
+import Transaction from './Transaction';
+import Swipeable from 'react-native-swipeable-row';
 
-const HomeScreen = ({logout, data }) => {
-    
-    // const data = {
-    //     transactions: [
-    //         {
-    //             id:1,
-    //             amount: "-10",
-    //             category: {
-    //                 name: "Food", 
-    //                 icon: "food"
-    //             },
-    //             description: "Rice",
-    //         },
-    //         {
-    //             id:2,
-    //             amount: "-20",
-    //             category: {
-    //                 name: "Food", 
-    //                 icon: "food"
-    //             },
-    //             description: "Cake",
-    //         },
-    //         {
-    //             id:3,
-    //             amount: "-5",
-    //             category: {
-    //                 name: "Food", 
-    //                 icon: "food"
-    //             },
-    //             description: "Chocolate",
-    //         },
-    //         {
-    //             id:4,
-    //             amount: "100",
-    //             category: {
-    //                 name: "Income",
-    //                 icon: "cash"
-    //             },
-    //             description: "Freelance",
-    //         },
-    //     ]
-    // }
-
-    const TranItem = ({item}) => {
-        return(        
-        <Card style={{marginBottom: 10, padding: 5}} key={item.id}>
-            <Card.Title 
-                title={item.description} 
-                subtitle={item.category.name} 
-                left={(props) => <Avatar.Icon {...props} icon={item.category.icon}/>}
-                right={() => <Paragraph style={{color: item.amount > 0 ? "green" : "red", marginRight: 20}}>{Number(item.amount).toFixed(2)}</Paragraph>}
-                />
-        </Card>)
-    }
+const HomeScreen = ({ logout, data, setData }) => {
 
     const getBalance = (data) => {
-        let balance = data.reduce((acc, item) => acc + Number(item.amount), 0)
-        return balance
+        let balance = data.reduce((acc, item) => acc + Number(item.amount), 0);
+        return balance;
     }
+
+    const rightButtons = [
+        <TouchableOpacity><Avatar.Icon color="red" style={{ marginRight: 0, height: 82, backgroundColor: '#F7C6C5', borderRadius: 0}} size={50} icon="trash-can" /></TouchableOpacity>
+    ];
+
+    const handleDelete = (id) => {
+        let newData =  data.filter( (item) => item.id !== id);
+        setData(newData);
+    }
+
     return (
         <View style={styles.container}>
             <Appbar.Header>
-                <Appbar.Content title="Home" />
+                <Appbar.Content style={{ fontWeights: '', textAlign: 'left' }} title={`Your Balance: $ ${getBalance(data).toFixed(2)}`} />
                 <Appbar.Action icon="logout" onPress={logout} />
             </Appbar.Header>
-            <View style={{ margin: 10 }}>
-                <Title>Your Balance: ${getBalance(data).toFixed(2)}</Title>
+            <View style={{ margin: 20 }}>
                 <Divider />
                 <ScrollView>
-                    {data.map( item => <TranItem item={item} key={item.id}/> )}
+                    {data.map( item => 
+                        <Swipeable rightActionActivationDistance={30} rightButtons={rightButtons} onRightActionRelease={() => handleDelete(item.id)} >
+                            <Transaction item={item} key={item.id}/> 
+                        </Swipeable>
+                    )}
                 </ScrollView>
             </View>
-            {/* <FAB
-                style={styles.fab}
-                icon="plus"
-                onPress={() => setIndex(2)}
-            /> */}
         </View>
     )
 }
+
+export default HomeScreen;
+
 const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
@@ -96,4 +55,3 @@ const styles = StyleSheet.create({
         flex: 1
     },
 })
-export default HomeScreen

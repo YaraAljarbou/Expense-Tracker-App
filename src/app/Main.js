@@ -1,93 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, Title } from 'react-native-paper';
 import createApolloClient from './apollo';
 import gql from 'graphql-tag';
 import { ApolloProvider } from 'react-apollo';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomNavigation, Appbar, IconButton } from 'react-native-paper';
+import { BottomNavigation } from 'react-native-paper';
 import HomeScreen from './components/HomeScreen';
 import ExpenseForm from './components/ExpenseForm';
+import Profile from './components/Profile';
+import TransactionData from './components/TransactionData';
 
 const Main = ({ userId, username, token, logout }) => {
+
    const [client, setClient] = useState(null);
    const [index, setIndex] = useState(0);
-   const [data, setData] = useState([
-      {
-         id: 1,
-         amount: "-10",
-         category: {
-            name: "Food",
-            icon: "food"
-         },
-         description: "Rice",
-      },
-      {
-         id: 2,
-         amount: "-20",
-         category: {
-            name: "Food",
-            icon: "food"
-         },
-         description: "Cake",
-      },
-      {
-         id: 3,
-         amount: "-5",
-         category: {
-            name: "Food",
-            icon: "food"
-         },
-         description: "Chocolate",
-      },
-      {
-         id: 4,
-         amount: "100",
-         category: {
-            name: "Income",
-            icon: "cash"
-         },
-         description: "Freelance",
-      },
-   ])
+   const [data, setData] = useState(TransactionData)
+
    const [routes] = useState([
       { key: 'home', title: 'Home', icon: 'home' },
       { key: 'add', title: 'Add Expense', icon: 'plus-circle' },
+      { key: 'profile', title: 'Profile', icon: 'account-circle' },
    ]);
+
    const renderScene = ({ route, jumpTo }) => {
       switch (route.key) {
          case 'home':
             return <HomeScreen jumpTo={jumpTo} logout={logout} data={data} setData={setData}/>;
          case 'add':
             return <ExpenseForm jumpTo={jumpTo} logout={logout} data={data} setData={setData} setIndex={setIndex}/>;
-         // case 'recents':
-         //    return <SettingScreen jumpTo={jumpTo} />;
+         case 'profile':
+            return <Profile jumpTo={jumpTo} logout={logout} username={username}/>;
       }
    }
-   // const HomeScreen = (props) => {
-   //    console.log(props)
-   //    return (
-   //    <View>
-   //       <Appbar.Header>
-   //          <Appbar.Content title="Home" />
-   //       </Appbar.Header>
-   //       <Title>Your Balance</Title>
-   //       <Text>{username}</Text>
-   //       {/* <Transactions userId={userId}/> */}
-   //       <IconButton
-   //          icon="plus"
-   //          size={40}
-   //          onPress={() => console.log('Pressed')}
-   //       />
-   //    </View>
-   //    )
-   // }
-   // const renderScene = BottomNavigation.SceneMap({
-   //    home: HomeScreen,
-   //    albums: SettingScreen,
-   //    recents: SettingScreen,
-   // });
 
    useEffect(() => {
       const apolloClient = createApolloClient(token);
@@ -107,15 +51,11 @@ const Main = ({ userId, username, token, logout }) => {
                userid: userId
             }
          });
-      }    // Execute the created function directly
+      }
       getClient();
-
       setClient(apolloClient);
-      // logout();
    }, []);
 
-   const Tab = createBottomTabNavigator();
-   // console.log("token => " + token)
    return (
       client ?
          <ApolloProvider client={client}>
@@ -125,18 +65,12 @@ const Main = ({ userId, username, token, logout }) => {
                onIndexChange={setIndex}
                renderScene={renderScene}
             />
-            {/* <NavigationContainer>
-               <Tab.Navigator>
-                  <Tab.Screen name="Home" component={HomeScreen} />
-                  <Tab.Screen name="Setting" component={SettingScreen} />
-               </Tab.Navigator>
-            </NavigationContainer> */}
          </ApolloProvider>
          : <View><Text>Loading...</Text></View>
    );
 }
 
-export default Main
+export default Main;
 
 const styles = StyleSheet.create({
    container: {

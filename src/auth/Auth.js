@@ -1,10 +1,9 @@
-// import { AuthSession } from 'expo';
 import * as AuthSession from 'expo-auth-session';
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import jwtDecoder from 'jwt-decode';
-import { Button, Title } from 'react-native-paper';
+import { Button, Appbar } from 'react-native-paper';
 const auth0ClientId = 'xYCVQxpXx4GMUSqcXfr15xnGnPoSv1yh';//////////////////////////////
 const auth0Domain = 'https://expense-tracker-app.us.auth0.com';////////////////////////////////
 
@@ -60,20 +59,16 @@ const Auth = ({ login }) => {
 
    
    return (
-      <View style={styles.container}>
-         <Title>Expense Tracker</Title>
-         <Button mode="contained" onPress={loginWithAuth0}>
-            Login
-         </Button>
-         {/* <View>
-            <TouchableOpacity
-               style={styles.loginButton}
-               onPress={loginWithAuth0}
-            >
-               <Text style={styles.buttonText}> Login </Text>
-            </TouchableOpacity>
-         </View> */}
-      </View>
+      <>
+         <Appbar.Header></Appbar.Header>
+         <View style={styles.container}>
+            <Text style={{color: "green", fontSize: 30, marginBottom: 5}}>Expense Tracker</Text>
+            <Image source={require('../app/components/logo.png')}/>
+            <Button style={{ width: 250, marginTop: 10}} mode="contained" onPress={loginWithAuth0}>
+               Lets Get Started
+            </Button>
+         </View>
+      </>
    )
 }
 
