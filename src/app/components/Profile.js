@@ -5,40 +5,6 @@ import DropDown from 'react-native-paper-dropdown';
 import CategoryData from './CategoryData';
 
 const Profile = ({ logout, username }) => {
-    const [expense, setExpense] = useState({
-        id: Math.random().toString(36).substr(2, 9),
-        amount: "",
-        category: {
-            name: "",
-            icon: ""
-        },
-        description: "",
-    });
-
-    const [showDropDown, setShowDropDown] = useState(false);
-    const [category, setCategory] = useState();
-
-    const categoryList = [];
-    for (const category of CategoryData)
-        categoryList.push({ label: category.name, value: category.name });
-
-    let selectedCategory = CategoryData.find(c => c.name === category);
-    const handleChange = () => {
-        setData([...data, expense ])
-        setExpense({ id: Math.random().toString(36).substr(2, 9),
-            amount: "",
-            category: {
-                name: "",
-                icon: ""
-            },
-            description: "" 
-        });
-        setIndex(0);
-    }
-
-    useEffect(() => {
-        setExpense({ ...expense, category: selectedCategory });
-    }, [category]);
 
     return (
         <View>
@@ -47,7 +13,7 @@ const Profile = ({ logout, username }) => {
                 <Appbar.Action icon="logout" onPress={logout} />
             </Appbar.Header>
             <View style={styles.container}>
-                <Card style={{ marginTop: '30%', padding: 30 }}>
+                <Card style={{ marginTop: '35%', padding: 30 }}>
                     <Card.Title title={username} style={{ marginLeft: '25%' }} /> 
                     <Avatar.Icon style={{ marginLeft: '35%' }} size={100} icon="account-circle" />
                 </Card>

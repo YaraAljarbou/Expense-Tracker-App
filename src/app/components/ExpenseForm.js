@@ -13,6 +13,7 @@ const ExpenseForm = ({ logout, data, setData, setIndex }) => {
             icon: ""
         },
         description: "",
+        date: ""
     });
 
     const [showDropDown, setShowDropDown] = useState(false);
